@@ -1,0 +1,16 @@
+{
+  "name": "book_gym",
+  "version": "1.0.0",
+  "description": "Book Beijing Normal University's Gym",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Quejiahao",
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "underscore": "^1.13.6"
+  }
+}
