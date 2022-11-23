@@ -18,7 +18,7 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 			res.on('end', () => {
 				var response_body = Buffer.concat(chunks_of_data).toString();
 				// resolve(response_body);
-				return_val = {
+				const return_val = {
 					text: response_body,
 					headers: res.headers,
 				};
@@ -36,4 +36,12 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 	});
 }
 
+function three_days_later() {
+	const date_obj = new Date();
+	date_obj.setDate(date_obj.getDate() + 3);
+	const date_str = date_obj.toISOString().split('T')[0];
+	return date_str;
+}
+
 module.exports.get_request_promise = get_request_promise;
+module.exports.three_days_later = three_days_later;

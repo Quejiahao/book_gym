@@ -32,7 +32,7 @@ function get_jsessionid_cookies_promise(
 		const lt = resp.text.match(lt_regex)[0];
 		const execution = resp.text.match(execution_regex)[0];
 
-		cas_login_data = {
+		const cas_login_data = {
 			rsa: strEnc(username + password + lt, '1', '2', '3'),
 			ul: username.length,
 			pl: password.length,

@@ -16,7 +16,7 @@ function test_kaptcha_code_promise(test_code, cookies, callback) {
 					console.log(
 						`Get kaptcha code took ${endTime - startTime} ms.`
 					);
-					callback(test_code);
+					callback(cookies, test_code);
 					return test_code;
 				}
 			}

@@ -1,6 +1,6 @@
 #!node
 
-function book_gym(e) {
+function book_gym(cookies, e) {
 	console.log(e);
 }
 
