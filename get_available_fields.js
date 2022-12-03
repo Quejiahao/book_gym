@@ -1,4 +1,8 @@
 #!node
+/**
+curl 'https://cgyd.prsc.bnu.edu.cn/gymsite/cacheAction.do?ms=viewBook&gymnasium_id=2&item_id=5326&time_date=2022-11-20&userType=1' | grep resourcesm.put
+ */
+
 const { book_url_root } = require('./url_const');
 const { get_request_promise, three_days_later } = require('./utils');
 
@@ -84,7 +88,7 @@ function get_available_fields(
 		+ view_book_params;
 	get_request_promise(
 		view_book_url,
-		// cookies
+		cookies
 	).then((resp) => {
 		const stu_fields_regex = /([0-9]{4,6})', '([0-9,A-Z]{48})/g;
 		const all_fields = new Map();

@@ -23,7 +23,7 @@ function get_jsessionid_cookies_promise(
 	callback
 ) {
 	const cas_login_params = '?' + (new URLSearchParams({
-		'service': book_url_root + 'login.jsp',
+		service: book_url_root + 'login.jsp',
 	})).toString();
 	const cas_login_lt_url = cas_login_url + cas_login_params;
 	get_request_promise(cas_login_lt_url).then((resp) => {
@@ -53,26 +53,32 @@ function get_jsessionid_cookies_promise(
 			(new URLSearchParams(cas_login_data)).toString(),
 			{
 				'Content-Type': 'application/x-www-form-urlencoded',
-				// 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.50',
-				// 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-				// 'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-				// 'Cache-Control': 'no-cache',
-				// 'Connection': 'keep-alive',
-				// 'DNT': '1',
-				// 'Origin': 'http://cas.bnu.edu.cn',
-				// 'Pragma': 'no-cache',
-				// 'Referer': 'http://cas.bnu.edu.cn/cas/login?service=https%3A%2F%2Fcgyd.prsc.bnu.edu.cn%2Flogin.jsp',
-				// 'Upgrade-Insecure-Requests': '1',
 			},
-			{ method: 'POST' }
-		)
-			.then((resp) => {
-				console.log('resp.cookies: ' + resp.cookies);
-				get_request_promise(resp.headers.location).then((resp) => {
-					const JSESSIONID = get_cookies_jsessionid(resp.cookies);
-					callback(JSESSIONID);
+			{
+				method: 'POST',
+			}
+		).then((resp) => {
+			get_request_promise(resp.headers.location).then((resp) => {
+				const cookies = 'JSESSIONID='
+					+ get_cookies_jsessionid(resp.cookies);
+				get_request_promise(
+					resp.headers.location,
+					cookies
+				).then((resp) => {
+					get_request_promise(
+						resp.headers.location,
+						cookies
+					).then((resp) => {
+						get_request_promise(
+							resp.headers.location,
+							cookies
+						).then((resp) => {
+							callback(cookies);
+						});
+					});
 				});
 			});
+		});
 	});
 }
 

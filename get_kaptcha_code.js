@@ -1,3 +1,13 @@
+#!node
+/**
+curl 'https://cgyd.prsc.bnu.edu.cn/Kaptcha.jpg' -H 'Cookie: JSESSIONID=aGIaieL83GqgzvWBMa' -O /dev/null --silent
+
+for i in {0..200}
+do
+	curl 'https://cgyd.prsc.bnu.edu.cn/front/frontAction.do?ms=checkCodeAjax&checkcodeuser='$i -H 'Cookie: JSESSIONID=aLZZvgRG9rTbP9YmHi' --silent
+done
+ */
+
 const { book_url_root } = require('./url_const');
 const { get_request_promise } = require('./utils');
 
@@ -16,7 +26,7 @@ function test_kaptcha_code_promise(test_code, cookies, callback) {
 					console.log(
 						`Get kaptcha code took ${endTime - startTime} ms.`
 					);
-					callback(cookies, test_code);
+					callback(test_code);
 					return test_code;
 				}
 			}

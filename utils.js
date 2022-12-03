@@ -21,6 +21,7 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 				const return_val = {
 					text: response_body,
 					headers: res.headers,
+					buffer: Buffer.concat(chunks_of_data),
 				};
 				return_val.cookies = return_val.headers['set-cookie'];
 				resolve(return_val);
