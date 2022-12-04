@@ -9,15 +9,12 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 		if (!_.isEmpty(headers)) {
 			options.headers = headers;
 		}
-		// console.log('options: ' + JSON.stringify(options));
-		// console.log('data: ' + data);
 		const req = https.request(url, options, (res) => {
 			var chunks_of_data = [];
 			res.on('data', (fragments) =>
 				chunks_of_data.push(fragments));
 			res.on('end', () => {
 				var response_body = Buffer.concat(chunks_of_data).toString();
-				// resolve(response_body);
 				const return_val = {
 					text: response_body,
 					headers: res.headers,

@@ -6,22 +6,21 @@ curl 'https://cgyd.prsc.bnu.edu.cn/gymbook/gymbook/gymBookAction.do?ms=saveGymBo
 	--silent --noproxy '*' | iconv -t utf-8 -f gbk
  */
 
-const { book_url_root } = require('./url_const');
+const { gym_book_url } = require('./url_const');
 const { get_request_promise, three_days_later } = require('./utils');
 
 function book_gym(
 	cookies,
 	kaptcha_code,
-	phone_number = '15712153690',
-	field_code = 'F1F54054648F1FD0ACF67DE5A03FD8E4D2460164396801A5',
+	field_code,
 	date_str = three_days_later(),
+	phone_number = '15712153690',
+	callback = () => { },
 ) {
 	const gym_book_params = '?' + (new URLSearchParams({
 		ms: 'saveGymBook',
 	})).toString();
-	const gym_book_url = book_url_root
-		+ 'gymbook/gymbook/gymBookAction.do'
-		+ gym_book_params;
+	const gym_book_url_params = gym_book_url + gym_book_params;
 	const gym_book_data = {
 		'bookData.book_person_phone': phone_number,
 		selectedPayWay: '1',
@@ -29,7 +28,7 @@ function book_gym(
 		checkcodeuser: kaptcha_code,
 	};
 	get_request_promise(
-		gym_book_url,
+		gym_book_url_params,
 		cookies,
 		(new URLSearchParams(gym_book_data)).toString(),
 		{
@@ -38,13 +37,13 @@ function book_gym(
 		{
 			method: 'POST',
 		},
-	)
-		.then((resp) => {
-			const resp_msg = JSON.parse(
-				(new TextDecoder("gbk")).decode(resp.buffer)
-			).msg;
-			console.log(resp_msg);
-		});
+	).then((resp) => {
+		const resp_msg = JSON.parse(
+			(new TextDecoder("gbk")).decode(resp.buffer)
+		).msg;
+		console.log(resp_msg);
+		callback();
+	});
 }
 
 module.exports = book_gym;

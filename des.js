@@ -1,12 +1,13 @@
-/*** DES加密解密
-* @Copyright Copyright (c) 2006
-* @author Guapo
-* @see DESCore
-*/
+#!node
+/**
+ * DES encrypt decrypt
+ * @Copyright Copyright (c) 2006
+ * @author Guapo
+ * @see DESCore
+ */
 
 /** encrypt the string to string made up of hex* return the encrypted string*/
 function strEnc(data, firstKey, secondKey, thirdKey) {
-
 	var leng = data.length;
 	var encData = "";
 	var firstKeyBt, secondKeyBt, thirdKeyBt, firstLength, secondLength, thirdLength;
