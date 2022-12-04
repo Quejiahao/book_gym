@@ -1,8 +1,8 @@
 #!node
 /**
 curl 'https://cgyd.prsc.bnu.edu.cn/gymbook/gymbook/gymBookAction.do?ms=saveGymBook' \
-	-H 'Cookie: JSESSIONID=anTmfm6TRx7eagodwt' \
-	--data-raw 'bookData.book_person_phone=15712153690&selectedPayWay=1&allFieldTime=ABE2C41EC06BF6E5D74A7B236E5A7CD4DDC0C3D179C75F02%232022-12-06&checkcodeuser=50' \
+	-H 'Cookie: JSESSIONID=aypuIgg4WSg40C5Dyt' \
+	--data-raw 'bookData.book_person_phone=15712153690&selectedPayWay=1&allFieldTime=F1F54054648F1FD048AA0FB16DDEA7894C784753343F3228%232022-12-06&checkcodeuser=78' \
 	--silent --noproxy '*' | iconv -t utf-8 -f gbk
  */
 
@@ -27,7 +27,7 @@ function book_gym(
 		selectedPayWay: '1',
 		allFieldTime: field_code + '#' + date_str,
 		checkcodeuser: kaptcha_code,
-	}
+	};
 	get_request_promise(
 		gym_book_url,
 		cookies,
@@ -44,7 +44,7 @@ function book_gym(
 				(new TextDecoder("gbk")).decode(resp.buffer)
 			).msg;
 			console.log(resp_msg);
-		})
+		});
 }
 
 module.exports = book_gym;
