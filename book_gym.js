@@ -11,6 +11,7 @@ const { get_request_promise, three_days_later } = require('./utils');
 
 function book_gym(
 	cookies,
+	username,
 	kaptcha_code,
 	field_code,
 	date_str = three_days_later(),
@@ -41,7 +42,7 @@ function book_gym(
 		const resp_msg = JSON.parse(
 			(new TextDecoder("gbk")).decode(resp.buffer)
 		).msg;
-		console.log(resp_msg);
+		console.log(username, resp_msg);
 		callback();
 	});
 }

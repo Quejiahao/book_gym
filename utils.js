@@ -14,11 +14,12 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 			res.on('data', (fragments) =>
 				chunks_of_data.push(fragments));
 			res.on('end', () => {
-				var response_body = Buffer.concat(chunks_of_data).toString();
+				const response_body = Buffer.concat(chunks_of_data).toString();
 				const return_val = {
 					text: response_body,
 					headers: res.headers,
 					buffer: Buffer.concat(chunks_of_data),
+					statusCode: res.statusCode,
 				};
 				return_val.cookies = return_val.headers['set-cookie'];
 				resolve(return_val);

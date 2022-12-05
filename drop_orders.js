@@ -34,7 +34,7 @@ function get_unpay_orders(cookies, callback) {
 	});
 }
 
-function drop_orders(cookies, bookid) {
+function drop_orders(cookies, username, bookid) {
 	const gym_drop_params = '?' + (new URLSearchParams({
 		ms: 'unsubscribe',
 	})).toString();
@@ -56,7 +56,7 @@ function drop_orders(cookies, bookid) {
 		},
 	).then((resp) => {
 		const resp_msg = (new TextDecoder("gbk")).decode(resp.buffer);
-		console.log(resp_msg);
+		console.log(username, resp_msg);
 	});
 }
 

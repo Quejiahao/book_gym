@@ -1,6 +1,5 @@
 #!node
 const { strEnc } = require('./des');
-const { username_pool, password_pool } = require('./get_user_pool');
 const { book_url_root, cas_login_url } = require('./url_const');
 const { get_request_promise } = require('./utils');
 const { URLSearchParams } = require('url');
@@ -18,8 +17,8 @@ function get_cookies_jsessionid(cookies) {
 }
 
 function get_jsessionid_cookies_promise(
-	username = username_pool[0],
-	password = password_pool[0],
+	username,
+	password,
 	callback
 ) {
 	const cas_login_params = '?' + (new URLSearchParams({
@@ -58,6 +57,10 @@ function get_jsessionid_cookies_promise(
 				method: 'POST',
 			}
 		).then((resp) => {
+			if (resp.statusCode != 302) {
+				console.log(username, '登录失败!');
+				return;
+			}
 			get_request_promise(resp.headers.location).then((resp) => {
 				const cookies = 'JSESSIONID='
 					+ get_cookies_jsessionid(resp.cookies);
