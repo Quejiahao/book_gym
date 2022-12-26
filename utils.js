@@ -42,5 +42,10 @@ function three_days_later() {
 	return date_str;
 }
 
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports.get_request_promise = get_request_promise;
 module.exports.three_days_later = three_days_later;
+module.exports.sleep = sleep;
