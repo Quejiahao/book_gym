@@ -55,8 +55,8 @@ function senven_thirty_do(callback) {
 	if (wait_time < 0) {
 		wait_time = 0;
 	}
-	console.log('还需等待', wait_time, 'ms.');
 	setTimeout(callback, wait_time);
+	console.log('还需等待', wait_time, 'ms.');
 }
 
 function sleep(ms) {
