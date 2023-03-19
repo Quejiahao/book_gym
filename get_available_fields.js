@@ -64,23 +64,40 @@ function get_item_id(sport_name = '羽毛球') {
 }
 
 function get_all_fields_codes(resp_text) {
-	const stu_fields_regex = /([0-9]{4,6})', '([0-9,A-Z]{48})/g;
+	const stu_fields_regex = /t:'(.?)'.*\n.*'([0-9]{4,6})', '([0-9,A-Z]{48})/g;
 	const all_fields = new Map();
 	while (field = stu_fields_regex.exec(resp_text)) {
-		all_fields.set(parseInt(field[1]), field[2]);
+		all_fields.set(parseInt(field[2]), {
+			field_code: field[3],
+			can_see_student: parseInt(field[1]),
+		});
+	}
+	return all_fields;
+}
+
+function delete_student_cannot_see_fields(all_fields) {
+	for(const [all_fields_num, all_fields_value] of all_fields) {
+		if (all_fields_value.can_see_student) {
+			all_fields.delete(all_fields_num);
+		}
 	}
 	return all_fields;
 }
 
 function get_locked_fields(resp_text) {
-	// markStatusColor('69162', '训练', '1', '');
-	// const locked_fields_regex = /(?<=r\(')([0-9]{4,6})', '(.{2})', '1/g;
-	const locked_fields_regex = /(?<=r\(')([0-9]{4,6})(', ')/g;
+	const locked_fields_regex = /(?<=r\(')([0-9]{4,6})','(.{2})','1/g;
 	const locked_fields = new Map();
 	while (field = locked_fields_regex.exec(resp_text)) {
 		locked_fields.set(parseInt(field[1]), field[2]);
 	}
 	return locked_fields;
+}
+
+function delete_locked_fields(available_fields, locked_fields) {
+	for(const locked_fields_num of locked_fields.keys()) {
+		available_fields.delete(locked_fields_num);
+	}
+	return available_fields;
 }
 
 function get_available_fields(
@@ -105,11 +122,12 @@ function get_available_fields(
 		view_book_url,
 		cookies
 	).then((resp) => {
-		const resp_text = resp.text
-		const all_fields = get_all_fields_codes(resp_text);
+		const resp_text = (new TextDecoder("gbk")).decode(resp.buffer);
+		const available_fields = get_all_fields_codes(resp_text);
+		delete_student_cannot_see_fields(available_fields);
 		const locked_fields = get_locked_fields(resp_text);
-		console.log(locked_fields);
-		// callback(all_fields);
+		delete_locked_fields(available_fields, locked_fields);
+		callback(available_fields);
 	});
 }
 
