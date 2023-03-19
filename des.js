@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 /**
  * DES encrypt decrypt
  * @Copyright Copyright (c) 2006

@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 const { strEnc } = require('./des');
 const { book_url_root, cas_login_url } = require('./url_const');
 const { get_request_promise } = require('./utils');

@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 /**
 curl 'https://cgyd.prsc.bnu.edu.cn/gymsite/cacheAction.do?ms=viewBook&gymnasium_id=2&item_id=5326&time_date=2022-11-20&userType=1' | grep resourcesm.put
  */
@@ -59,11 +59,6 @@ const all_field_nums = {
 	),
 }
 
-// const sport_name = '羽毛球';
-// const usertype = '1';
-// const date_str = '2022-07-25';
-// const date_str = three_days_later();
-
 function get_item_id(sport_name = '羽毛球') {
 	return sports[sport_name].item_id;
 }
@@ -73,7 +68,7 @@ function get_available_fields(
 	callback,
 	date_str = three_days_later(),
 	sport_name = '羽毛球',
-	usertype = '1',
+	usertype = '',
 	gymnasium_id = '2',
 ) {
 	const view_book_params = '?' + (new URLSearchParams({

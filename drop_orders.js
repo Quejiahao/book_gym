@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 /**
 curl 'https://cgyd.prsc.bnu.edu.cn/gymbook/gymbook/gymBookAction.do?ms=unsubscribe' \
 	-H 'Cookie: JSESSIONID=aKHnScKkgAt9zyenDn' \
@@ -34,7 +34,7 @@ function get_unpay_orders(cookies, callback) {
 	});
 }
 
-function drop_orders(cookies, username, bookid) {
+function drop_orders(cookies, username, bookid, unpay_order_str) {
 	const gym_drop_params = '?' + (new URLSearchParams({
 		ms: 'unsubscribe',
 	})).toString();
@@ -56,7 +56,7 @@ function drop_orders(cookies, username, bookid) {
 		},
 	).then((resp) => {
 		const resp_msg = (new TextDecoder("gbk")).decode(resp.buffer);
-		console.log(username, resp_msg);
+		console.log(username, unpay_order_str, resp_msg);
 	});
 }
 

@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 /**
 curl 'https://cgyd.prsc.bnu.edu.cn/gymbook/gymbook/gymBookAction.do?ms=saveGymBook' \
 	-H 'Cookie: JSESSIONID=aypuIgg4WSg40C5Dyt' \
@@ -17,6 +17,7 @@ function book_gym(
 	date_str = three_days_later(),
 	phone_number = '15712153690',
 	callback = () => { },
+	field_num,
 ) {
 	const gym_book_params = '?' + (new URLSearchParams({
 		ms: 'saveGymBook',
@@ -28,6 +29,7 @@ function book_gym(
 		allFieldTime: field_code + '#' + date_str,
 		checkcodeuser: kaptcha_code,
 	};
+	console.log("curl -w '@a.txt' --silent '" + gym_book_url_params + "' --data-raw '" + (new URLSearchParams(gym_book_data)).toString() + "' -H 'Cookie: " + cookies + "' --noproxy '*' | iconv -t utf-8 -f gbk");
 	get_request_promise(
 		gym_book_url_params,
 		cookies,
@@ -42,7 +44,7 @@ function book_gym(
 		const resp_msg = JSON.parse(
 			(new TextDecoder("gbk")).decode(resp.buffer)
 		).msg;
-		console.log(username, resp_msg);
+		console.log(username, field_num, resp_msg);
 		callback();
 	});
 }

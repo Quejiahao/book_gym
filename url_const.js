@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const book_url_root = 'https://cgyd.prsc.bnu.edu.cn/';
 const cas_login_url = 'https://cas.bnu.edu.cn/cas/login';
 const gym_book_url = book_url_root + 'gymbook/gymbook/gymBookAction.do'

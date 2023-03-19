@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const https = require('https');
 const _ = require('underscore');
 
@@ -42,6 +44,21 @@ function three_days_later() {
 	return date_str;
 }
 
+function senven_thirty_do(callback) {
+	const now = new Date();
+	var wait_time = new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate(),
+		7, 30, 0, 0
+	) - now;
+	if (wait_time < 0) {
+		wait_time = 0;
+	}
+	console.log('还需等待', wait_time, 'ms.');
+	setTimeout(callback, wait_time);
+}
+
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -49,3 +66,4 @@ function sleep(ms) {
 module.exports.get_request_promise = get_request_promise;
 module.exports.three_days_later = three_days_later;
 module.exports.sleep = sleep;
+module.exports.senven_thirty_do = senven_thirty_do;

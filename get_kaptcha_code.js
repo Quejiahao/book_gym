@@ -1,4 +1,4 @@
-#!node
+#!/usr/bin/env node
 /**
 curl 'https://cgyd.prsc.bnu.edu.cn/Kaptcha.jpg' -H 'Cookie: JSESSIONID=aGIaieL83GqgzvWBMa' -O /dev/null --silent
 
