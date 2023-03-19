@@ -25,7 +25,6 @@ user_pool.map((user, user_ind) => {
 				function _book_gym() {
 					const field_num = field_nums[user_ind % field_nums.length];
 					const field_code = all_fields.get(field_num);
-					// for (const [field_num, field_code] of all_fields)
 					book_gym(
 						cookies,
 						username,
@@ -56,6 +55,7 @@ user_pool.map((user, user_ind) => {
 							});
 						},
 						field_num,
+						false,
 					);
 					if (is_loop_book) {
 						sleep(time_step).then(_book_gym);

@@ -18,6 +18,7 @@ function book_gym(
 	phone_number = '15712153690',
 	callback = () => { },
 	field_num,
+	is_show_curl = false,
 ) {
 	const gym_book_params = '?' + (new URLSearchParams({
 		ms: 'saveGymBook',
@@ -29,11 +30,22 @@ function book_gym(
 		allFieldTime: field_code + '#' + date_str,
 		checkcodeuser: kaptcha_code,
 	};
-	console.log("curl -w '@a.txt' --silent '" + gym_book_url_params + "' --data-raw '" + (new URLSearchParams(gym_book_data)).toString() + "' -H 'Cookie: " + cookies + "' --noproxy '*' | iconv -t utf-8 -f gbk");
+	const gym_book_data_raw = (new URLSearchParams(gym_book_data)).toString();
+	if (is_show_curl) {
+		console.log(
+			"curl -w '@a.txt' --silent '"
+			+ gym_book_url_params
+			+ "' --data-raw '"
+			+ gym_book_data_raw
+			+ "' -H 'Cookie: "
+			+ cookies
+			+ "' --noproxy '*' | iconv -t utf-8 -f gbk"
+		);
+	}
 	get_request_promise(
 		gym_book_url_params,
 		cookies,
-		(new URLSearchParams(gym_book_data)).toString(),
+		gym_book_data_raw,
 		{
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
