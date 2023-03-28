@@ -40,18 +40,25 @@ function generate_field_nums_array(first_row) {
 	});
 }
 
+const all_field_names = {
+	'羽毛球': [
+		'羽1', '羽2', '羽3', '羽4', '羽5', '羽6', '羽7', '羽8',
+		'小综合1', '小综合2', '小综合3', '小综合4', '二层东', '二层西'
+	],
+	'乒乓球': [
+		'乒1', '乒2', '乒3', '乒4', '乒5', '乒6',
+		'乒7', '乒8', '乒9', '乒10', '乒11'
+	]
+}
+
 const all_field_nums = {
 	'羽毛球': generate_field_nums_array(
-		// 羽1	羽2	羽3	羽4	羽5	羽6	羽7	羽8
-		// 小综合1	小综合2	小综合3	小综合4	二层东	二层西
 		[
 			5897, 5947, 5997, 6047, 35426, 35476, 35526, 35576,
 			50419, 50469, 50519, 50569, 737994, 738045
 		]
 	),
 	'乒乓球': generate_field_nums_array(
-		// 乒1	乒2	乒3	乒4	乒5	乒6
-		// 乒7	乒8	乒9	乒10	乒11
 		[
 			5497, 5547, 5597, 5647, 5697, 5747,
 			5797, 5847, 69134, 69184, 69234
@@ -69,14 +76,14 @@ function get_all_fields_codes(resp_text) {
 	while (field = stu_fields_regex.exec(resp_text)) {
 		all_fields.set(parseInt(field[2]), {
 			field_code: field[3],
-			can_see_student: parseInt(field[1]),
+			can_see_student: field[1] ? parseInt(field[1]) : undefined,
 		});
 	}
 	return all_fields;
 }
 
 function delete_student_cannot_see_fields(all_fields) {
-	for(const [all_fields_num, all_fields_value] of all_fields) {
+	for (const [all_fields_num, all_fields_value] of all_fields) {
 		if (all_fields_value.can_see_student) {
 			all_fields.delete(all_fields_num);
 		}
@@ -94,7 +101,7 @@ function get_locked_fields(resp_text) {
 }
 
 function delete_locked_fields(available_fields, locked_fields) {
-	for(const locked_fields_num of locked_fields.keys()) {
+	for (const locked_fields_num of locked_fields.keys()) {
 		available_fields.delete(locked_fields_num);
 	}
 	return available_fields;
@@ -107,6 +114,7 @@ function get_available_fields(
 	sport_name = '羽毛球',
 	usertype = '',
 	gymnasium_id = '2',
+	is_delete_locked = false,	// locked_fields maybe wrong!!!
 ) {
 	const view_book_params = '?' + (new URLSearchParams({
 		ms: 'viewBook',
@@ -125,10 +133,15 @@ function get_available_fields(
 		const resp_text = (new TextDecoder("gbk")).decode(resp.buffer);
 		const available_fields = get_all_fields_codes(resp_text);
 		delete_student_cannot_see_fields(available_fields);
-		const locked_fields = get_locked_fields(resp_text);
-		delete_locked_fields(available_fields, locked_fields);
+		if (is_delete_locked) {
+			const locked_fields = get_locked_fields(resp_text);
+			console.log(locked_fields);
+			delete_locked_fields(available_fields, locked_fields);
+		}
 		callback(available_fields);
 	});
 }
 
-module.exports = get_available_fields;
+module.exports.all_field_names = all_field_names;
+module.exports.all_field_nums = all_field_nums;
+module.exports.get_available_fields = get_available_fields;

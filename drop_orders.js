@@ -56,7 +56,7 @@ function drop_orders(cookies, username, bookid, unpay_order_str) {
 		},
 	).then((resp) => {
 		const resp_msg = (new TextDecoder("gbk")).decode(resp.buffer);
-		console.log(username, unpay_order_str, resp_msg);
+		console.log((new Date()).toISOString(), username, unpay_order_str, resp_msg);
 	});
 }
 
