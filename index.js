@@ -10,12 +10,14 @@ const { get_unpay_orders, drop_orders } = require('./drop_orders');
 const { three_days_later, sleep, senven_thirty_do } = require('./utils');
 
 const date_str = three_days_later();
-const sport_name = '羽毛球';
+const sport_name = '羽毛球'	// '羽毛球' '乒乓球';
 const phone_number = '15712153690';
-const book_hours = [18, 19];
+const book_hours = [20];
 const book_field_names = [
+	// 	'乒10'
+	// ];
+	'小综合2', '小综合3', '小综合1', '小综合4',
 	'羽1', '羽2', '羽3', '羽4', '羽5', '羽6',
-	'小综合1', '小综合2', '小综合3', '小综合4',
 ];
 const book_field_indexes = book_field_names.map(
 	(field_name) => all_field_names[sport_name].indexOf(field_name)
@@ -29,7 +31,7 @@ const field_nums = book_field_indexes.map(
 		);
 	}
 ).flat();
-const time_step = 2000;	// 1997;
+const time_step = 2003;	// 1997;
 const is_loop_book = true;
 const is_drop_test = true;
 
@@ -55,7 +57,7 @@ user_pool.map((user, user_ind) => {
 					}
 					if (!field_nums.length) {
 						console.log('没有需要预定的场地了!');
-						return;
+						process.exit();
 					}
 					const field_num = field_nums[user_ind % field_nums.length];
 					const field_value = available_fields.get(field_num);
@@ -95,17 +97,21 @@ user_pool.map((user, user_ind) => {
 								});
 							},
 							field_num,
-							false,
+							true,
 						);
+						if (is_loop_book) {
+							user_ind += user_pool.length;
+							sleep(time_step).then(_book_gym);
+						}
 					}
 					else {
 						console.log(field_num, '场地无法预定!');
 						const field_num_ind = field_nums.indexOf(field_num);
 						field_nums.splice(field_num_ind, 1);
-					}
-					if (is_loop_book) {
-						sleep(time_step).then(_book_gym);
-						user_ind += user_pool.length;
+						if (is_loop_book) {
+							user_ind += user_pool.length;
+							_book_gym();
+						}
 					}
 				}
 				senven_thirty_do(_book_gym);

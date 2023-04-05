@@ -40,7 +40,7 @@ function get_request_promise(url, cookies, data, headers = {}, options = {}) {
 function three_days_later() {
 	const date_obj = new Date();
 	date_obj.setDate(date_obj.getDate() + 3);
-	const date_str = date_obj.toISOString().split('T')[0];
+	const date_str = date_obj.toLocaleDateString("lt");
 	return date_str;
 }
 
@@ -50,7 +50,7 @@ function senven_thirty_do(callback) {
 		now.getFullYear(),
 		now.getMonth(),
 		now.getDate(),
-		7, 30, 0, 0
+		7, 29, 59, 990
 	) - now;
 	if (wait_time < 0) {
 		wait_time = 0;

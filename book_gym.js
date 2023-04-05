@@ -33,7 +33,10 @@ function book_gym(
 	const gym_book_data_raw = (new URLSearchParams(gym_book_data)).toString();
 	if (is_show_curl) {
 		console.log(
-			"curl -w '@a.txt' --silent '"
+			(new Date()).toISOString(),
+			"curl "
+			// + "-w '@a.txt' "
+			+ "--silent '"
 			+ gym_book_url_params
 			+ "' --data-raw '"
 			+ gym_book_data_raw
