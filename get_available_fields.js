@@ -135,7 +135,6 @@ function get_available_fields(
 		delete_student_cannot_see_fields(available_fields);
 		if (is_delete_locked) {
 			const locked_fields = get_locked_fields(resp_text);
-			console.log(locked_fields);
 			delete_locked_fields(available_fields, locked_fields);
 		}
 		callback(available_fields);

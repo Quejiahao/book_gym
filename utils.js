@@ -50,7 +50,7 @@ function senven_thirty_do(callback) {
 		now.getFullYear(),
 		now.getMonth(),
 		now.getDate(),
-		7, 29, 59, 990
+		7, 29, 59, 900
 	) - now;
 	if (wait_time < 0) {
 		wait_time = 0;

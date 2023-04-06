@@ -59,7 +59,7 @@ function book_gym(
 		const resp_msg = JSON.parse(
 			(new TextDecoder("gbk")).decode(resp.buffer)
 		).msg;
-		console.log(username, field_num, resp_msg);
+		console.log((new Date()).toISOString(), username, field_num, resp_msg);
 		callback();
 	});
 }

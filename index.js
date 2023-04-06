@@ -16,8 +16,8 @@ const book_hours = [20];
 const book_field_names = [
 	// 	'乒10'
 	// ];
-	'小综合2', '小综合3', '小综合1', '小综合4',
-	'羽1', '羽2', '羽3', '羽4', '羽5', '羽6',
+	'羽1', '羽4', '羽2', '羽3', '羽5', '羽6',
+	'小综合1', '小综合4', '小综合2', '小综合3',
 ];
 const book_field_indexes = book_field_names.map(
 	(field_name) => all_field_names[sport_name].indexOf(field_name)
