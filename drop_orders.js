@@ -10,6 +10,10 @@ curl 'https://cgyd.prsc.bnu.edu.cn/gymbook/gymbook/gymBookAction.do?ms=unsubscri
 const { book_url_root, gym_book_url } = require('./url_const');
 const { get_request_promise } = require('./utils');
 
+/**
+ * This function cannot recognize if the field names are unpayed, but can get the
+ * correct bookids.
+ */
 function get_unpay_orders(cookies, callback) {
 	const gym_view_params = '?' + (new URLSearchParams({
 		ms: 'viewGymBook',

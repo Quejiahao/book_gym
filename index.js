@@ -12,12 +12,24 @@ const { three_days_later, sleep, senven_thirty_do } = require('./utils');
 const date_str = three_days_later();
 const sport_name = '羽毛球'	// '羽毛球' '乒乓球';
 const phone_number = '15712153690';
-const book_hours = [20];
+const book_hours = [14, 15, 16, 21];
+const time_step = 2003;	// 1997;
+const is_loop_book = true;
+const is_drop_test = true;
+const senven_thirty_delta = -120;
 const book_field_names = [
 	// 	'乒10'
 	// ];
-	'羽1', '羽4', '羽2', '羽3', '羽5', '羽6',
-	'小综合1', '小综合4', '小综合2', '小综合3',
+	'羽1',
+	'羽4',
+	'羽2',
+	'羽3',
+	'羽5',
+	'羽6',
+	'小综合1',
+	'小综合4',
+	'小综合2',
+	'小综合3',
 ];
 const book_field_indexes = book_field_names.map(
 	(field_name) => all_field_names[sport_name].indexOf(field_name)
@@ -31,9 +43,6 @@ const field_nums = book_field_indexes.map(
 		);
 	}
 ).flat();
-const time_step = 2003;	// 1997;
-const is_loop_book = true;
-const is_drop_test = true;
 
 user_pool.map((user, user_ind) => {
 	const username = user[0];
@@ -114,11 +123,11 @@ user_pool.map((user, user_ind) => {
 						}
 					}
 				}
-				senven_thirty_do(_book_gym);
+				senven_thirty_do(_book_gym, senven_thirty_delta);
 				senven_thirty_do(() => sleep(Math.max(
-					10000,
+					20000,
 					time_step * book_hours.length * book_field_names.length
-				)).then(process.exit));
+				)).then(process.exit), senven_thirty_delta);
 			}, date_str, sport_name, '', '2', true);
 		});
 	});

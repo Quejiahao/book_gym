@@ -44,14 +44,14 @@ function three_days_later() {
 	return date_str;
 }
 
-function senven_thirty_do(callback) {
+function senven_thirty_do(callback, delta = -100) {
 	const now = new Date();
 	var wait_time = new Date(
 		now.getFullYear(),
 		now.getMonth(),
 		now.getDate(),
-		7, 29, 59, 900
-	) - now;
+		7, 30, 0, 0
+	) + delta - now;
 	if (wait_time < 0) {
 		wait_time = 0;
 	}
