@@ -51,7 +51,7 @@ function senven_thirty_do(callback, delta = -100) {
 		now.getMonth(),
 		now.getDate(),
 		7, 30, 0, 0
-	) + delta - now;
+	) - now + delta;
 	if (wait_time < 0) {
 		wait_time = 0;
 	}
