@@ -12,11 +12,11 @@ const { three_days_later, sleep, senven_thirty_do } = require('./utils');
 const date_str = three_days_later();
 const sport_name = '羽毛球'	// '羽毛球' '乒乓球';
 const phone_number = '15712153690';
-const book_hours = [14, 15, 16, 21];
+const book_hours = [21, 18, 14];
 const time_step = 2003;	// 1997;
 const is_loop_book = true;
 const is_drop_test = true;
-const senven_thirty_delta = -120;
+const senven_thirty_delta = -190;	// -180, 建议 -150
 const book_field_names = [
 	// 	'乒10'
 	// ];
@@ -50,7 +50,7 @@ user_pool.map((user, user_ind) => {
 	get_jsessionid_cookies_promise(username, password, (cookies) => {
 		get_kaptcha_code_promise(cookies, (kaptcha_code) => {
 			get_available_fields('', (available_fields) => {
-				console.log(available_fields);
+				// console.log(available_fields);
 				field_nums.map((field_num) => {
 					const field_value = available_fields.get(field_num);
 					if (!field_value) {

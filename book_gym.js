@@ -34,6 +34,7 @@ function book_gym(
 	if (is_show_curl) {
 		console.log(
 			(new Date()).toISOString(),
+			field_num,
 			"curl "
 			// + "-w '@a.txt' "
 			+ "--silent '"
